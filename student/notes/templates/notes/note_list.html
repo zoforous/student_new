@@ -1,0 +1,30 @@
+{% extends 'notes/base.html' %}
+{% block title %}My Notes{% endblock %}
+
+{% block content %}
+<div class="notes-container">
+    <h2>My Notes</h2>
+
+    {% if note %}
+        <ul class="note-list">
+            {% for note in notes %}
+                <li class="note-item">
+                    <h3>{{ note.title }}</h3>
+                    <p><strong>Subject:</strong> {{ note.subject.name }}</p>
+                    <p><strong>Created:</strong> {{ note.created_at|date:"M d, Y H:i" }}</p>
+
+                    <div class="note-actions">
+                        <a href="{% url 'note-detail' note.pk %}">View</a> |
+                        <a href="{% url 'note-update' note.pk %}">Edit</a> |
+                        <a href="{% url 'note-delete' note.pk %}">Delete</a> |
+                        <a href="{% url 'note-download' note.pk %}">Download PDF</a> |
+                        <a href="{% url 'note-share' note.pk %}">Share</a>
+                    </div>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>You have no notes. <a href="{% url 'note-create' %}">Create your first note</a>.</p>
+    {% endif %}
+</div>
+{% endblock %}
